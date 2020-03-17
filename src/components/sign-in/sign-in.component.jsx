@@ -1,29 +1,15 @@
 import React from "react";
-import Avatar from "@material-ui/core/Avatar";
-import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
-import Link from "@material-ui/core/Link";
-import Paper from "@material-ui/core/Paper";
 import Box from "@material-ui/core/Box";
+import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
-import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
-import Typography from "@material-ui/core/Typography";
+import Paper from "@material-ui/core/Paper";
+import FsfxIcon from "../../icons/fsfx.png";
+import Button from "@material-ui/core/Button";
+import Checkbox from "@material-ui/core/Checkbox";
+import TextField from "@material-ui/core/TextField";
 import { makeStyles } from "@material-ui/core/styles";
-
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {"Copyright © Fundação São Francisco Xavier"}
-      <Link color="inherit" href="https://material-ui.com/">
-        Git Hub
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
+import Copyright from "../copyright/copyright.component";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -40,7 +26,7 @@ const useStyles = makeStyles(theme => ({
     backgroundPosition: "center"
   },
   paper: {
-    margin: theme.spacing(8, 4),
+    margin: theme.spacing(8,4),
     display: "flex",
     flexDirection: "column",
     alignItems: "center"
@@ -54,25 +40,27 @@ const useStyles = makeStyles(theme => ({
     marginTop: theme.spacing(1)
   },
   submit: {
-    margin: theme.spacing(3, 0, 2)
+    margin: theme.spacing(3,0,2)
   }
 }));
 
 export default function SignInSide() {
+  const [email,setEmail] = React.useState("");
+  const [password,setPassword] = React.useState("");
   const classes = useStyles();
-
+  function validateForm() {
+    return email.length > 0 && password.length > 0;
+  }
+  function handleSubmit(event) {
+    event.preventDefault();
+  }
   return (
-    <Grid container className={classes.root}>
+    <Grid container className={classes.root} style={{ "overflow-y": "hidden" }}>
       <Grid item xs={false} sm={4} md={7} className={classes.image} />
       <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
         <div className={classes.paper}>
-          <Avatar className={classes.avatar}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Sign in
-          </Typography>
-          <form className={classes.form} noValidate>
+          <img src={FsfxIcon} alt="Fundação icon" height="150" width="450" crop="fill" />
+          <form className={classes.form} onSubmit={handleSubmit} noValidate>
             <TextField
               variant="outlined"
               margin="normal"
@@ -81,19 +69,23 @@ export default function SignInSide() {
               id="email"
               label="Email Address"
               name="email"
+              value={email}
               autoComplete="email"
               autoFocus
+              onChange={e => setEmail(e.target.value)}
             />
             <TextField
               variant="outlined"
               margin="normal"
               required
               fullWidth
+              value={password}
               name="password"
               label="Password"
               type="password"
               id="password"
               autoComplete="current-password"
+              onChange={e => setPassword(e.target.value)}
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
@@ -105,6 +97,7 @@ export default function SignInSide() {
               variant="contained"
               color="primary"
               className={classes.submit}
+              disabled={!validateForm()}
             >
               Sign In
             </Button>
@@ -126,6 +119,6 @@ export default function SignInSide() {
           </form>
         </div>
       </Grid>
-    </Grid>
+    </Grid >
   );
 }
