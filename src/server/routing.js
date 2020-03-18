@@ -16,7 +16,7 @@ router.use('/api',swaggerUi.serve)
 router.get('/api',swaggerUi.setup(swaggerDocument))
 
 // Add routes
-router.use('/api/v1/auth',authRoutes)
-router.use('/api/v1/users',auth.verifyToken,userRoutes)
+router.use('/api/auth',authRoutes)
+router.use('/api/users',auth.verifyToken,userRoutes)
 
 module.exports = router

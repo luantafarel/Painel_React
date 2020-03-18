@@ -14,7 +14,23 @@ let User = new Schema(
       unique: true,
       lowercase: true
     },
+    ramal: [{
+      numero: {
+        type: String,
+        maxLenght: 5
+      }
+    }],
     telefone: [{
+      ddd: {
+        type: String,
+        maxLenght: 2
+      },
+      numero: {
+        type: String,
+        maxLenght: 9
+      }
+    }],
+    whatsapp: [{
       ddd: {
         type: String,
         maxLenght: 2

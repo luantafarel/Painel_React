@@ -14,7 +14,7 @@ const register = async (req,res,next) => {
         res.status(422).send(Boom.badData('Some parameters are missing or incorrect'))
     }
 
-    let { name,email,password,telefone } = req.body
+    let { name,email,password,telefone,ramal,whatsapp } = req.body
 
     // Check if e-mail already exists
     let emailExists
@@ -34,6 +34,8 @@ const register = async (req,res,next) => {
             name: name,
             email: email,
             telefone: telefone,
+            ramal: ramal,
+            whatsapp: whatsapp,
             password: hashedPassword,
             lastLogin: null
         })
@@ -69,7 +71,7 @@ const login = async (req,res,next) => {
 
         if(!passwordValid) res.status(401).send(Boom.badData('Email/password is wrong'))
         // Generate the authorization token, valid for 30 minutes
-        let token = jwt.sign({ id: userExists._id },process.env.PRIVATE_KEY,{expiresIn: '30m'})
+        let token = jwt.sign({ id: userExists._id },process.env.PRIVATE_KEY,{ expiresIn: '30m' })
         await userModel.findOneAndUpdate(userExists.id,{
             $set: {
                 lastLogin: moment()

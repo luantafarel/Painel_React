@@ -23,14 +23,32 @@ const validateRegistrationBody = () => {
       .custom(arr => {
         return arr.every((element) => {
           // element is each element in the array
-          return _.has(element, 'ddd') && _.has(element, 'numero')
+          return _.has(element,'ddd') && _.has(element,'numero')
+        })
+      }),
+    body('whatsapp')
+      .isArray()
+      .withMessage('Whatsapp must be an array of objects')
+      .custom(arr => {
+        return arr.every((element) => {
+          // element is each element in the array
+          return _.has(element,'ddd') && _.has(element,'numero')
+        })
+      }),
+    body('ramal')
+      .isArray()
+      .withMessage('Ramal must be an array of objects')
+      .custom(arr => {
+        return arr.every((element) => {
+          // element is each element in the array
+          _.has(element,'numero')
         })
       })
       .withMessage('Object in telefone must have ddd and numero')
       .custom(arr => {
         return arr.every((element) => {
           // element is each element in the array
-          if (((typeof element.ddd === 'string') && (element.ddd.length === 3)) && ((typeof element.numero === 'string') && ((element.numero.length === 9) || (element.numero.length === 8)))) return true
+          if(((typeof element.ddd === 'string') && (element.ddd.length === 3)) && ((typeof element.numero === 'string') && ((element.numero.length === 9) || (element.numero.length === 8)))) return true
           else return false
         })
       })
